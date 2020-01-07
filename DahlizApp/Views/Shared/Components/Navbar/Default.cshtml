@@ -1,0 +1,182 @@
+﻿@model HomeIndexModel
+<!-- Start Header -->
+<header class="site-header">
+    <!-- Site top header -->
+    <div class="top-header text-center d-flex justify-content-center align-items-center">
+        @if (Model.NotiLanguage != null)
+        {
+            <a href="@Model.NotiLanguage.Noti.Link">@Model.NotiLanguage.Text</a>
+        }
+    </div>
+    <!-- End top header -->
+    <!-- Start Navigation -->
+    <div class="navigation">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="p-0 left-navigation d-flex align-items-center col-5">
+                    <nav class="site-nav">
+                        <ul class="d-flex">
+                            @{
+                                var counter = 0;
+                            }
+                            @foreach (var navbar in Model.CategoryLanguages)
+                            {
+                                if (counter == 0)
+                                {
+                                    <li class="left-navigation-list active"><a href="@Url.Action("Index","Home")">@Localizer["Home"]</a></li>
+                                }
+                                if (navbar.Category.Subcategories.Count == 0)
+                                {
+                                    <li class="left-navigation-list"><a href="@Url.Action("Index", "Category", new { categoryId = navbar.CategoryId})">@navbar.Name</a></li>
+                                }
+                                else
+                                {
+                                    <li class="left-navigation-list mydropdown-wrapper">
+                                        <span>@navbar.Name </span><i class="fas fa-sort-down"></i>
+                                        <ul class="mydropdown">
+                                            @foreach (var sub in Model.SubcategoryLanguages)
+                                            {
+                                                if (sub.Subcategory.CategoryId == navbar.CategoryId)
+                                                {
+                                                    <li><a href="@Url.Action("Index","Category",new { subCategoryId=sub.SubcategoryId,categoryId = navbar.CategoryId})" #">@sub.Name</a></li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                                counter++;
+                            }
+                        </ul>
+                    </nav>
+                    <i class="active pe-7s-menu hamburger" data-name="mobile"></i>
+                    <i class="pe-7s-close close" data-name="mobile"></i>
+                </div>
+                <div style="padding-bottom:7px;" class="logo d-flex justify-content-center align-items-center col-2">
+                    <h1><a href="@Url.Action("index","home")">Dahliz</a></h1>
+                </div>
+                <div class="right-navigation d-flex justify-content-end align-items-center col-5 p-0">
+                    <ul class="d-flex">
+                        <vc:language></vc:language>
+                        @if (Context.Session.GetString("user_id")==null)
+                        {
+                            <li class="right-navigation-list"><a href="@Url.Action("Login","Account")"><span>@Localizer["Sign In"]</span></a></li>
+                        }
+                        else
+                        {
+                            <li class="right-navigation-list"><a href="@Url.Action("Detail","Account")"><span>@Localizer["My Account"]</span></a></li>
+                        }
+                        <li class="right-navigation-list">
+                            <i class="pe-7s-shopbag"></i><span>@Localizer["Bag"]</span> <span class="mybadge">@Model.Cards.Count()</span>
+
+                            <div class="shopping-cart">
+                                <div class="bag-count">
+                                    <p>
+                                        @Localizer["You have"] <span>@Model.Cards.Count @Localizer["item(s)"]</span>  @Localizer["in your shopping bag"]
+                                    </p>
+                                </div>
+                                <div class="bag-inner">
+                                    <div class="bag-inner-element">
+                                        <div class="container-fluid">
+                                            @foreach (var card in Model.Cards)
+                                            {
+                                                <div class="my-2 ci-item" data-id="@card.Id" data-sizeId="@card.SizeId">
+                                                    <div class="row">
+                                                        <div class="col-3 p-0 bag-inner-photo">
+                                                            <img src="@card.Photo" alt="foto">
+                                                        </div>
+                                                        <div class="col-9 bag-inner-info">
+                                                            <h4>@card.Name</h4>
+                                                            <p>@card.Quantity X @card.Price  &#x20bc;</p>
+                                                            <div class="bag-controls">
+                                                                <a href="#">
+                                                                    <span class="bag-edit">
+                                                                        <i class="fas fa-edit"></i>
+                                                                    </span>
+                                                                </a>
+                                                                <a href="#">
+                                                                    <span class="bag-delete">
+                                                                        <i class="far fa-trash-alt"></i>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bag-total">
+                                    <span>@Localizer["Subtotal"]: @Model.Cards.Sum(c => c.Quantity * c.Price)  &#x20bc;</span>
+                                </div>
+                                <div class="bag-process">
+                                    <a href="@Url.Action("index","card")">@Localizer["Viewbag"]</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="right-navigation-list"><a href="@Url.Action("Index","Wishlist")"><i style="padding-top:11px" class="far fa-heart"></i> <span>@Localizer["Favorites"]</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <nav class="mobile-nav">
+            <ul>
+                @{
+                    counter = 0;
+                }
+                @foreach (var mobilenav in Model.CategoryLanguages)
+                {
+                    @if (counter == 0)
+                    {
+                        <li class="mobile-nav-list active"><a href="@Url.Action("Index","Home")">@Localizer["Home"]</a></li>
+
+                    }
+                    @if (mobilenav.Category.Subcategories.Count == 0)
+                    {
+                        <li class="mobile-nav-list"><a href="@Url.Action("Index","Category",new { categoryId = mobilenav.CategoryId })">@mobilenav.Name</a></li>
+                    }
+                    else
+                    {
+                        <li class="mobile-nav-list mobile-dropdown-wrapper">
+                            <a class="dropdownable_href" href="@Url.Action("Index","Category",new { categoryId = mobilenav.CategoryId })">@mobilenav.Name</a> <i class="fas fa-sort-down"></i>
+                            <ul class="mobile-dropdown">
+                                @foreach (var mobilesub in Model.SubcategoryLanguages)
+                                {
+                                    if (mobilesub.Subcategory.CategoryId == mobilenav.CategoryId)
+                                    {
+                                        <li><a href="@Url.Action("Index","Category",new { subCategoryId = mobilesub.SubcategoryId, categoryId = mobilenav.CategoryId })">@mobilesub.Name</a></li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    }
+
+                    counter++;
+                }
+            </ul>
+            <ul>
+                <li class="mobile-nav-list mobile-dropdown-wrapper">
+                    <a class="dropdownable_href" href="@Url.Action("SetLanguage","Language",new { culture =  Model.Language.Key,returnUrl = Context.Request.HttpContext.Request.Path})" >@Localizer[Model.Language.Value]</a> <i class="fas fa-sort-down"></i>
+                    <ul class="mobile-dropdown">
+                        @foreach (var language in Model.Languages)
+                        {
+                            <li>
+                                <a href="@Url.Action("SetLanguage","Language",new { culture =  language.Key,returnUrl = Context.Request.HttpContext.Request.Path})">@Localizer[language.Value]</a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+                @if (!Context.User.Identity.IsAuthenticated)
+                {
+                    <li class="mobile-nav-list"><a href="@Url.Action("Login","Account")"><span>@Localizer["Sign In"]</span></a></li>
+                }
+                else
+                {
+                    <li class="mobile-nav-list"><a href="@Url.Action("Detail","Account")"><span>@Localizer["My Account"]</span></a></li>
+                }
+            </ul>
+        </nav>
+    </div>
+    <!-- End Navigation -->
+</header>
+<!-- End Header -->

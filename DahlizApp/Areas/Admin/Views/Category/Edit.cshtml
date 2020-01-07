@@ -1,0 +1,36 @@
+﻿@model List<CategoryLanguage>
+@{
+    ViewData["Title"] = "Add";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Category Add</h4>
+                <form id="category_edit" autocomplete="off" method="post" action="@Url.Action("edit", "category")" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    @{ var counter = 0; }
+                    @foreach (var item in Model)
+                    {
+                        var error_name = "category_name" + counter;
+                        if (counter == 0)
+                        {
+                            <input hidden type="text" name="CategoryId" value="@item.CategoryId" />
+                        }
+
+                        <div class="form-group">
+                            <div class="error_wrapper @error_name"></div>
+                            <label>Name (@item.Language.Key)</label>
+                            <input data-element="true" data-type="text" data-error="@error_name" value="@item.Name" name="Names" type="text" class="form-control">
+                        </div>
+                        counter++;
+                    }
+                    <button type="submit" id="btnSubmit" data-parent="#category_edit" class="btn btn-primary">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

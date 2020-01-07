@@ -1,0 +1,48 @@
+﻿@model List<Size>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Size</h4>
+                    <a href="@Url.Action("add","size")" class="float-right btn btn-primary">Add</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{var i = 1; }
+                            @foreach (var size in Model)
+                            {
+                            <tr>
+                                <th scope="row">@i</th>
+                                <td>@size.Name</td>
+                                <td>
+                                    <a  asp-controller="Size" asp-action="Edit" asp-route-id ="@size.Id"><i class="fas fa-edit"></i></a>
+                                </td>
+                                <td>
+                                    <a onclick="return confirm('Are you sure you want to delete this item?');" asp-route-id ="@size.Id" asp-controller="Size" asp-action="Delete"><i class="fas fa-times"></i></a>
+                                </td>
+                            </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

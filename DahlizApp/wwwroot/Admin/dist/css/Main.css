@@ -1,0 +1,48 @@
+﻿
+.ProductSizeCount {
+    display: flex;
+    margin-bottom: 15px;
+}
+.ProductSizeCount .delete i{
+    color:red;
+}
+.ProductSizeCount .quantity {
+    margin-left: 20px;
+}
+.photos li {
+        display: inline-block;
+        list-style: none;
+        margin-top: 50px;
+        margin-right: 25px;
+        position: relative;
+}
+.table-product img{
+    width:100px;
+    height:100px;
+}
+.photos li img {
+        width: 300px;
+}
+.photos li .fa-times {
+        position: absolute;
+        color: red;
+        font-size: 25px;
+        right: -7px;
+        top: -12px;
+}
+.slider-table img{
+    width:200px;
+}
+
+.ProductSizeCount {
+    position: relative;
+}
+    .ProductSizeCount a {
+        position: absolute;
+        top: 20%;
+        left: 12%;
+    }
+
+.ck-content{
+    height:200px!important;
+}

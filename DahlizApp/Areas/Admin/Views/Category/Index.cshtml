@@ -1,0 +1,46 @@
+﻿@model List<CategoryLanguage>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Category</h4>
+                    <a href="@Url.Action("add","category")" class="float-right btn btn-primary">Add</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{var i = 1; }
+                            @foreach (var category in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@category.Name</td>
+                                    <td>
+                                        <a asp-controller="category" asp-action="edit" asp-route-id="@category.Category.Id"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="category" asp-action="delete" asp-route-categoryId="@category.Category.Id"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

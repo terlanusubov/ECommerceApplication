@@ -1,0 +1,98 @@
+@media only screen and (max-width:992px){
+    main .owl-carousel img {
+        height:350px!important;
+    }
+        .right-navigation ul li.left-navigation-list{
+        display:none;
+    }
+        .right-navigation ul li:nth-child(2){
+            display:none;
+
+        }
+            .right-navigation ul li:nth-child(3){
+                padding:0 !important;
+            }
+            .right-navigation ul li.right-navigation-list span:first-of-type {
+                display: none;
+            }
+            .mybadge{
+                left:68% !important;
+            }
+    .pe-7s-shopbag{
+        padding-right:0 !important;
+    }
+    .proceed-to-checkout {
+        padding-top: 50px;
+        padding-right: 10px;
+    }
+    #bag-apply input,
+    #bag-apply select{
+        width:100%;
+    }
+    .site-nav {
+        display: none;
+    }
+    .left-navigation > i.active{
+        display: block!important;
+    }
+    #product-wrapper .owl-carousel img{
+        height: 300px;
+    }
+}
+@media only screen and (max-width:576px){
+    #login .login-form{
+        padding: 10px;
+    }
+    .account-wrap{
+        margin-top:5px!important;
+    }
+    .social{
+        margin-top:10px;
+        margin-bottom: 20px;
+    }
+    .social a{
+        min-width: 100px;
+        font-size: 0.7em;
+    }
+    .load-more button{
+        padding: 15px 50px;
+        font-size: 1em;
+    }
+     #product-wrapper .product-img{
+        margin:auto;
+       
+    }
+    #product-wrapper .product-img img{
+        height: 375px;
+    }
+    #product-wrapper .product{
+        margin-top:50px;
+    }
+    footer{
+        text-align: center;
+    }
+    .footer-top-element a{
+        margin-top:0px!important;
+    }
+    .shopping-cart{
+        right:-140%!important;
+        width:300px;
+    }
+    .slide-item{
+        padding-top:70px;
+        padding-left:30px;
+        padding-bottom:0px;
+        text-align:center;
+    }
+    .slide-item h2{
+        font-size:2.5em;
+    }
+    .slide-item p{
+        font-size:1.3em;
+    }
+}
+@media only screen and (max-width:768px){
+    .top-header a {
+        font-size: 12px !important; 
+    }
+}

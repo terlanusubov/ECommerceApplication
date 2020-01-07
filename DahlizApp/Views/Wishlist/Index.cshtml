@@ -1,0 +1,105 @@
+﻿@model List<Card>
+@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dahliz.az</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/c12ff64bc1.js"></script>
+    <!-- Google Font (Raleway) -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="~/Template/front/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+    <link href="~/Template/front/css/helper.css" rel="stylesheet" />
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/Template/front/css/style.css">
+    <!-- Media css -->
+    <link rel="stylesheet" href="~/Template/front/css/media.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="~/Template/front/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/Template/front/css/owl.theme.default.css">
+</head>
+
+<body>
+
+    <vc:navbar></vc:navbar>
+    <!-- Start Main -->
+    <main>
+        <!-- PRELOADER -->
+        @*<div id="loader"></div>*@
+        <section id="product-list">
+            <div class="container">
+                <div class="row">
+                    @if (Model.Count == 0)
+                    {
+                        <h1>@Localizer["Empty"]</h1>
+                    }
+                    @foreach (var wishlist in Model)
+                    {
+                        <div data-id="@wishlist.Id" class="col-lg-3 col-md-4 col-sm-6 wishlist-item product-item">
+                            <div class="shadow-wrapper mx-auto">
+                                <div class="product-img d-flex justify-content-center">
+                                    <a href="@Url.Action("Index","Product",new{id = wishlist.Id})">
+                                        <img src="@wishlist.Photo" alt="">
+                                        <span class="wishlist wishlist-delete">
+                                            <i class="fas fa-times"></i>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="product-info">
+                                    <a href="#">@wishlist.Name</a>
+                                    <p>@wishlist.Price AZN</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="~/Template/front/js/owl.carousel.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/Template/front/js/script.js"></script>
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true,
+                    navText: ["<i class='fas fa-chevron-left'>", "<i class='fas fa-chevron-right'>"]
+                },
+                600: {
+                    items: 1,
+                    nav: true,
+                    navText: ["<i class='fas fa-chevron-left'>", "<i class='fas fa-chevron-right'>"]
+                },
+                1000: {
+                    items: 1,
+                    nav: true,
+                    loop: true,
+                    navText: ["<i class='fas fa-chevron-left'>", "<i class='fas fa-chevron-right'>"]
+                }
+            },
+
+            startPosition: 'URLHash',
+            URLhashListener: true
+
+        })
+    </script>
+</body>
+
+</html>

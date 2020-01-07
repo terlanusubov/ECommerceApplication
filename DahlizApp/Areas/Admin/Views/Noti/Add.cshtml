@@ -1,0 +1,35 @@
+﻿@model List<Language>
+@{
+    ViewData["Title"] = "Add";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Notification Add</h4>
+                <form autocomplete="off" method="post" action="@Url.Action("add", "noti")" id="noti_add" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    @{ var counter = 1;}
+                    @foreach (var language in Model)
+                    {
+                        var error_name = "color_name" + counter;
+                        <div class="form-group">
+                            <div class="error_wrapper @error_name"></div>
+                            <label>Text (@language.Key)</label>
+                            <input data-element="true" data-type="text" data-error="@error_name" name="Texts" type="text" class="form-control">
+                        </div>
+                        counter++;
+                    }
+                        <div class="form-group">
+                            <label>Link</label>
+                            <input data-element="true" data-type="text" name="Link" type="text" class="form-control">
+                        </div>
+                    <button type="submit" id="btnSubmit" data-parent="#color_add" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

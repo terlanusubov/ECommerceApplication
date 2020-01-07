@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dahliz.az</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/c12ff64bc1.js"></script>
+    <!-- Google Font (Raleway) -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <link href="~/Template/front/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+    <link href="~/Template/front/css/helper.css" rel="stylesheet" />
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/Template/front/css/style.css">
+    <!-- Media css -->
+    <link rel="stylesheet" href="~/Template/front/css/media.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="~/Template/front/css/owl.carousel.css">
+    <link rel="stylesheet" href="~/Template/front/css/owl.theme.default.css">
+</head>
+
+<body>
+
+    <vc:navbar></vc:navbar>
+    <!-- Start Main -->
+    <main>
+        <!-- PRELOADER -->
+        @*<div id="loader"></div>*@
+        @RenderBody()
+    </main>
+
+    <vc:footer></vc:footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="~/Template/front/js/script.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/Template/front/js/owl.carousel.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    @await RenderSectionAsync("RegisterJs", false)
+    <script>
+        $('.owl-carousel').owlCarousel({
+            responsiveClass: true,
+            items: 1,
+            nav: true,
+            loop: true,
+
+        })
+
+    </script>
+    @RenderSection("Modal", false);
+</body>
+
+</html>

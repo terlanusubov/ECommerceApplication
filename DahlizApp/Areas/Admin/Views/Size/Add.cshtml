@@ -1,0 +1,26 @@
+﻿@model Size
+@{
+    ViewData["Title"] = "Add";
+}
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Size Add</h4>
+                <form id="size_add" autocomplete="off" method="post" action="@Url.Action("add", "size")" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <div class="error_wrapper size_name"></div>
+                        <label>Name</label>
+                        <input type="text" data-type="text" data-element="true" data-error="size_name" class="form-control" asp-for="Name">
+                    </div>
+                    <button type="submit" id="btnSubmit" data-parent="#size_add" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>

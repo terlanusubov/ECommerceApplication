@@ -1,0 +1,45 @@
+﻿@model SubcategoryViewModel
+@{
+    ViewData["Title"] = "Add";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Subcategory Add</h4>
+                <form autocomplete="off" method="post" id="subcategory_edit" action="@Url.Action("edit", "subcategory")" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <div class="error_wrapper category_error"></div>
+                        <select data-element="true" data-error="category_error" name="CategoryId" class="form-control">
+                            <option value="0" disabled>Category</option>
+                            @foreach (var item in Model.categoryLanguages)
+                            {
+                                <option value="@item.Category.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    @{ var counter = 0;}
+                    @foreach (var subcategory in Model.subcategoryLanguages)
+                    {
+                        var error_name = "subcategory_name" + counter;
+                        if (counter == 0)
+                        {
+                            <input hidden type="text" name="SubcategoryId" value="@subcategory.SubcategoryId" />
+                        }
+                        <div class="form-group">
+                            <div class="error_wrapper @error_name"></div>
+                            <label>Name (@subcategory.Language.Key)</label>
+                            <input data-element="true" data-type="text" data-error="@error_name" value="@subcategory.Name" name="Names" type="text" class="form-control">
+                        </div>
+                        counter++;
+                    }
+                    <button type="submit" id="btnSubmit" data-parent="#subcategory_edit" class="btn btn-primary">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

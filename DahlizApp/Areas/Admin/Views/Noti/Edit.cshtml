@@ -1,0 +1,41 @@
+﻿@model List<NotiLanguage>
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Color Add</h4>
+                <form autocomplete="off" method="post" id="noti_edit" action="@Url.Action("edit", "noti")" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    @{ var counter = 0; }
+                    @foreach (var item in Model)
+                    {
+                        if (counter == 0)
+                        {
+                            <input hidden type="text" name="CategoryId" value="@item.NotiId" />
+                        }
+
+                        var error_name = "color_name" + counter;
+
+                        <div class="form-group">
+                            <div class="error_wrapper @error_name"></div>
+                            <label>Text (@item.Language.Key)</label>
+                            <input data-element="true" data-type="text" data-error="@error_name" value="@item.Text" name="Texts" type="text" class="form-control">
+                        </div>
+                        counter++;
+                    }
+                    <div class="form-group">
+                        <label>Link</label>
+                        <input data-element="true" data-type="text"  value="@Model.FirstOrDefault().Noti.Link" name="Texts" type="text" class="form-control">
+                    </div>
+                    <button type="submit" id="btnSubmit" data-parent="#color_edit" class="btn btn-primary">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

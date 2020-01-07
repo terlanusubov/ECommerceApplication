@@ -1,0 +1,49 @@
+﻿@model List<AboutLanguage>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">About</h4>
+                    @if (Model.Count == 0)
+                    {
+                        <a href="@Url.Action("add","about")" class="float-right btn btn-primary">Add</a>
+                    }
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Text</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (AboutLanguage aboutLanguage in Model)
+                            {
+                                <tr>
+                                    <td>@Html.Raw(aboutLanguage.Text) ...</td>
+                                    <td>
+                                        <a asp-controller="About" asp-action="Edit" asp-route-id="@aboutLanguage.AboutId"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="About" asp-action="Delete" asp-route-id="@aboutLanguage.AboutId"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,204 @@
+﻿@model RegisterModel
+
+<section id="register">
+    <div class="col-lg-6 col-md-8 col-sm-10  mx-auto">
+        <div class="title">
+            <span class="border"><i class="fas fa-chevron-right"></i></span>
+            <h4>@Localizer["Register"] @Localizer["Step"] <span id="step" style="display: inline-block;">1</span></h4>
+        </div>
+        <div class="login-form">
+            <form id="registerStepOne" autocomplete="off">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form-group">
+                    <label for="Name">@Localizer["Name"]</label>
+                    <input asp-for="StepOneModel.Name" class="form-control">
+                    <span class="text-danger" asp-validation-for="StepOneModel.Name"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Surname">@Localizer["Surname"]</label>
+                    <input asp-for="StepOneModel.Surname" required class="form-control">
+                    <span class="text-danger" asp-validation-for="StepOneModel.Surname"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Username">@Localizer["Username"]</label>
+                    <input asp-for="StepOneModel.Username" class="form-control">
+                    <span class="text-danger" asp-validation-for="StepOneModel.Username"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Email">@Localizer["Email"]</label>
+                    <input id="email" asp-for="StepOneModel.Email" class="form-control">
+                    <span class="text-danger" asp-validation-for="StepOneModel.Email"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Password">@Localizer["Password"]</label>
+                    <input id="password" asp-for="StepOneModel.Password" required class="form-control">
+                    <span class="text-danger" asp-validation-for="StepOneModel.Password"></span>
+                </div>
+                <div class="form-group">
+                    <label for="ConfirmPassword">@Localizer["Confirm Password"]</label>
+                    <input id="confirmPassword" asp-for="StepOneModel.ConfirmPassword" class="form-control">
+                    <span class="text-danger" asp-validation-for="StepOneModel.ConfirmPassword"></span>
+                </div>
+                <div class="form-group text-right">
+                    <button id="next" type="submit" class="login-button">@Localizer["Next"]</button>
+                </div>
+            </form>
+
+            <form style="display: none;" id="registerStepTwo" asp-controller="Account" asp-action="Register" method="post">
+                <div class="form-group">
+                    <label for="Phone">@Localizer["Phone"]</label>
+                    <input asp-for="StepTwoModel.Phone" required class="form-control" type="text">
+                    <span class="text-danger" asp-validation-for="StepTwoModel.Phone"></span>
+                </div>
+                <div class="form-group">
+                    <label for="country">@Localizer["Country"]</label>
+                    <select id="countries" asp-for="StepTwoModel.Country" asp-items="Model.Countries" class="form-control">
+                    </select>
+                    <span class="text-danger" asp-validation-for="StepTwoModel.Country"></span>
+                </div>
+                <div class="form-group">
+                    <label for="city">@Localizer["City"]</label>
+                    <select id="cities" asp-for="StepTwoModel.City" class="form-control">
+                    </select>
+                    <span class="text-danger" asp-validation-for="StepTwoModel.City"></span>
+                </div>
+                <div class="form-group">
+                    <label for="address">
+                        @Localizer["Address"]
+                    </label>
+                    <input asp-for="StepTwoModel.Address" type="text" class="form-control" />
+                    <span class="text-danger" asp-validation-for="StepTwoModel.Address"></span>
+                </div>
+                <div class="form-group">
+                    <label for="post">
+                        @Localizer["Postal Code"]
+                    </label>
+                    <input asp-for="StepTwoModel.Post" type="text" class="form-control" />
+                    <span class="text-danger" asp-validation-for="StepTwoModel.Post"></span>
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                    <button id="prev" class="login-button">Prev</button>
+                    <button type="submit" class="login-button">@Localizer["register"]</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+
+<div class="overlay-body"></div>
+<div class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+@section RegisterJs {
+    <script>
+        $(document).ready(function () {
+            let registerStepOne = $("#registerStepOne");
+
+            let registerStepTwo = $("#registerStepTwo");
+
+            let countries = $("#countries");
+
+            let cities = $("#cities");
+
+            let prev = $("#prev");
+
+            function UnfinishedRegister() {
+                $.ajax({
+                    headers: {
+                        'RequestVerificationToken': $("input[name=__RequestVerificationToken]").val()
+                    },
+                    url: "/Account/UnfinishedRegister",
+                    type: "POST",
+                    async: false,
+                    success: function (response) {
+                        if (response != null) {
+                            $("#password").val("");
+                            $("#confirmPassword").val("");
+                            registerStepTwo.fadeOut(300);
+                            registerStepOne.fadeIn(300);
+                            $("#step").text("1");
+                        }
+                    }
+                });
+            }
+
+            registerStepOne.submit(function (e) {
+                e.preventDefault();
+                let form = $(this);
+                if (form.valid()) {
+                    $(".lds-roller").addClass("active");
+                    $(".overlay-body").addClass("active");
+                    $.ajax({
+                        headers: {
+                            'RequestVerificationToken': $("input[name=__RequestVerificationToken]").val()
+                        },
+                        url: "/Account/RegisterStepOne/",
+                        type: "POST",
+                        data: form.serialize(),
+                        success: function (response) {
+                            if (response.status == 200) {
+                                $(".lds-roller").removeClass("active");
+                                $(".overlay-body").removeClass("active");
+                                registerStepOne.fadeOut(300);
+                                registerStepTwo.fadeIn(300);
+                                $("#step").text("2");
+                            }
+                            else if (response.status == 400) {
+                                $("#email").next().text(response.error);
+                            }
+                        }
+                    });
+                }
+            });
+
+            registerStepTwo.submit(function (e) {
+                window.removeEventListener("beforeunload", UnfinishedRegister);
+            });
+
+            countries.change(function (e) {
+                cities.html("");
+                countries.next().text("");
+                cities.next().text("");
+                $.ajax({
+                    headers: {
+                        'RequestVerificationToken': $("input[name=__RequestVerificationToken]").val()
+                    },
+                    url: "/Account/GetCitiesByCountry",
+                    type: "GET",
+                    data: { name: $(this).val() },
+                    success: function (response) {
+                        if (response.status == 200) {
+                            var options;
+                            for (var city of response.data) {
+                                options += `<option value="${city.name}">${city.name}</option>`;
+                            }
+                            cities.html(options);
+                        }
+                        else if (response.status == 404) {
+                            cities.next().text(response.error);
+                        }
+                        else if (response.status == 400) {
+                            countries.next().text(response.error);
+                        }
+                    }
+                });
+            });
+
+            countries.trigger("change");
+
+            prev.click(UnfinishedRegister);
+
+            window.addEventListener("beforeunload", UnfinishedRegister);
+        });
+    </script>
+}

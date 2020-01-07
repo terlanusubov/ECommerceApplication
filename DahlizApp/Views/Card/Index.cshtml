@@ -1,0 +1,222 @@
+﻿@model CardModel
+@{
+    ViewData["Title"] = "Card";
+}
+
+@*<div class="shop-single shopping-cart">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <table class="cart-table">
+                        <tr>
+                            <th>@Localizer["Remove"]</th>
+                            <th>@Localizer["Product Image"]</th>
+                            <th>@Localizer["Product Name"]</th>
+                            <th>@Localizer["Edit"]</th>
+                            <th>@Localizer["Quantity"]</th>
+                            <th>@Localizer["Unit Price"]</th>
+                            <th>@Localizer["Subtotal"]</th>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                        {
+                            <tr class="ck-item" data-id="@item.Id" data-sizeId="@item.SizeId">
+                                <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                <td><img src="@item.Photo" class="img-responsive" alt="" /></td>
+                                <td>
+                                    <h4><a href="@Url.Action("index","product",new {id = item.Id })">@item.Name</a></h4>
+                                    <p>Size: @item.SizeName</p>
+                                </td>
+                                <td><a href="@Url.Action("index","product",new {id = item.Id })"><i class="fa fa-edit"></i></a></td>
+                                <td>
+                                    <select class="form-control" name="quantity">
+                                        @for (int i = 0; i < item.ProductDbQuantity; i++)
+                                        {
+                                            <option class="@((i+1)==item.Quantity?"selected":"")" value="@(i+1)">@(i+1)</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="item-price">@(item.Price) &#x20bc;</div>
+                                </td>
+                                <td>
+                                    <div class="item-price total">@(item.Quantity*item.Price) &#x20bc;</div>
+                                </td>
+                            </tr>
+
+                        }
+                    </table>
+                    <div class="table-btn">
+                        <a href="@Url.Action("index","home")" class="btn-black pull-left">@Localizer["Continue Shopping"]</a>
+                    </div>
+                    <div class="clearfix space20"></div>
+                    <div class="row shipping-info-wrap">
+                        @if (Model.Count!=0)
+                        {
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="shipping">
+                                    <h2>Estimate Shipping and Tax</h2>
+                                    <div class="shipping-form">
+                                        <form id="shipping-zip-form">
+                                            <p>Enter your destination to get a shipping estimate.</p>
+                                            <ul class="form-list">
+                                                <li>
+                                                    <label class="required"><em>*</em>@Localizer["Country"]</label>
+                                                    <input class="input-text" type="text">
+                                                </li>
+                                                <li>
+                                                    <label><em>*</em>@Localizer["State/Province"]</label>
+                                                    <input class="input-text" type="text">
+                                                </li>
+                                                <li>
+                                                    <label><em>*</em>@Localizer["Zip/Postal Code"]</label>
+                                                    <input class="input-text" type="text">
+                                                </li>
+                                            </ul>
+                                            <div class="buttons-set">
+                                                <button type="button" class="btn-black"><span><span>Get a Quote</span></span></button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="totals">
+                                    <form asp-action="Checkout" asp-controller="Payment" method="post">
+                                        <table id="shopping-cart-totals-table">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="" class="a-right" colspan="1">
+                                                        @Localizer["Subtotal"]:
+                                                    </td>
+                                                    <td style="" class="a-right">
+                                                        <span class="price">@(Model.Sum(c => c.Price * c.Quantity)) &#x20bc;</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="" class="a-right" colspan="1">
+                                                        @Localizer["Card type"]:
+                                                    </td>
+                                                    <td>
+                                                        <select name="cardType" class="form-control">
+                                                            <option value="v">Visa</option>
+                                                            <option value="m">Master</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <ul class="checkout-types">
+                                           <li class="space10"><button type="submit" class="btn-color">@Localizer["Proceed to Checkout"]</button></li>
+                                        </ul>
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="space40"></div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+<div class="container-fluid">
+    <div id="shopping-bag" class="my-4">
+        <div id="bag">
+            <div class="my-3 table-responsive">
+                <table class="cart-table table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>@Localizer["Remove"]</th>
+                            <th>@Localizer["Product Image"]</th>
+                            <th>@Localizer["Product Name"]</th>
+                            <th>@Localizer["Edit"]</th>
+                            <th>@Localizer["Quantity"]</th>
+                            <th>@Localizer["Unit Price"]</th>
+                            <th>@Localizer["Subtotal"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Card card in Model.Cards)
+                        {
+                            <tr class="ck-item" data-id="@card.Id" data-sizeId="@card.SizeId">
+                                <td>
+                                    <i class="fas fa-trash-alt"></i>
+                                </td>
+                                <td>
+                                    <img src="@card.Photo" />
+                                </td>
+                                <td>
+                                    <h4><a href="@Url.Action("index","product",new {id = card.Id })">@card.Name</a></h4>
+                                    <p><span>Size:</span>@card.SizeName</p>
+                                </td>
+                                <td><a href="@Url.Action("index","product",new {id = card.Id })"><i class="fa fa-edit"></i></a></td>
+                                <td>
+                                    <select class="form-control" name="quantity">
+                                        @for (int i = 0; i < card.ProductDbQuantity; i++)
+                                        {
+                                            if ((i + 1) == card.Quantity)
+                                            {
+                                                <option selected value="@(i+1)">@(i + 1)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@(i+1)">@(i + 1)</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="item-price">@(card.Price) &#x20bc;</div>
+                                </td>
+                                <td>
+                                    <div class="item-price total">@(card.Quantity * card.Price) &#x20bc;</div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <a href="@Url.Action("Index","Home")" class="continue">@Localizer["Continue Shopping"]</a>
+        </div>
+        <div id="bag-apply">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <h4>@Localizer["ESTIMATE SHIPPING AND TAX"]</h4>
+                        <form id="checkout-form" asp-action="Checkout" asp-controller="Payment" method="post">
+                            <label for="City">@Localizer["State/Province"]</label>
+                            <select id="City" name="City" value="">
+                                <option selected value="0" disabled>Select</option>
+                                @foreach (var shipping in Model.Shippings)
+                                {
+                                    <option value="@shipping.Name">@shipping.Name</option>
+                                }
+                            </select>
+                            <label for="Zip"> @Localizer["Zip/Postal Code"]</label>
+                            <input type="text" id="Zip" name="Zip" value="@Model.user.Post" />
+                            <label for="address">
+                                @Localizer["Address"]
+                            </label>
+                            <input type="text" id="address" name="Address" value="@Model.user.Address" />
+                            <label for="Payment"></label>
+                            <select id="Payment" name="cardType">
+                                <option value="v">Visa</option>
+                                <option value="m">Master</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="proceed-to-checkout text-left">
+                            <p class="subtotal">@Localizer["Subtotal"]:&nbsp; @(Model.Cards.Sum(c => c.Price * c.Quantity)) &#x20bc;</p>
+                            <p class="shipping"></p>
+                            <p class="total">@Localizer["Total"]: <span>&nbsp; @(Model.Cards.Sum(c => c.Price * c.Quantity))</span> &#x20bc;</p>
+                            <a href="#" id="checkout">@Localizer["PROCEED TO CHECKOUT"]</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

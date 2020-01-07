@@ -1,0 +1,11 @@
+﻿@model List<TermsLanguage>
+<div class="container">
+    <div class="row">
+        <div class="col-10 mx-auto">
+            @foreach (TermsLanguage termsLanguage in Model)
+            {
+             @Html.Raw(termsLanguage.Data)
+            }
+        </div>
+    </div>
+</div>

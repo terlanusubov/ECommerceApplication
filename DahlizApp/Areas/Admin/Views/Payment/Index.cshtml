@@ -1,0 +1,116 @@
+﻿@model PaymentModel
+@{
+    ViewData["Title"] = "Payment";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Payment</h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-product">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>User</th>
+                                <th>Product Name</th>
+                                <th>Count</th>
+                                <th>Size</th>
+                                <th>Price</th>
+                                <th>Shipping</th>
+                                <th>Total Price</th>
+                                <th>City</th>
+                                <th>Postal Code</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var transactionId = Model.Payments.FirstOrDefault()?.TransactionId;
+                                var counter = 0;
+                            }
+                            @foreach (var payment in Model.Payments)
+                            {
+                                if (transactionId != payment.TransactionId)
+                                {
+                                    counter = 0;
+                                    transactionId = payment.TransactionId;
+                                }
+                                if (counter == 0)
+                                {
+                                    <tr>
+                                        <td>@payment.UserName @payment.UserSurname</td>
+                                        <td>
+                                            @foreach (Payment p in Model.Payments)
+                                            {
+                                                if (p.UserId == payment.UserId && p.TransactionId == payment.TransactionId)
+                                                {
+                                                    <a style="display:block;" href="@Url.Action("Index", "Product", new { area = "", id = p.ProductId })">@p.ProductName</a>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @foreach (Payment p in Model.Payments)
+                                            {
+                                                if (p.UserId == payment.UserId && p.TransactionId == payment.TransactionId)
+                                                {
+                                                    <p>@p.Count</p>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @foreach (Payment p in Model.Payments)
+                                            {
+                                                if (p.UserId == payment.UserId && p.TransactionId == payment.TransactionId)
+                                                {
+                                                    <p>@p.ProductSize</p>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @foreach (Payment p in Model.Payments)
+                                            {
+                                                if (p.UserId == payment.UserId && p.TransactionId == payment.TransactionId)
+                                                {
+                                                    if (p.ProductDiscount != null)
+                                                    {
+                                                        <p>@(p.ProductPrice * p.ProductDiscount / 100)</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>@p.ProductPrice</p>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            @payment.ShippingPrice
+                                        </td>
+                                        <td>
+                                            @(Model.Payments.Where(p => p.TransactionId == transactionId).Sum(p=>p.TotalPrice) + Model.Payments.Where(p => p.TransactionId == transactionId).FirstOrDefault()?.ShippingPrice)
+                                        </td>
+                                        <td>
+                                            @payment.City
+                                        </td>
+                                        <td>
+                                            @payment.PostalCode
+                                        </td>
+                                        <td>
+                                            @payment.Date.ToShortDateString()
+                                        </td>
+                                        <td>
+                                            <button class="btn @(payment.Status == 1 ? "btn-success" : payment.Status == 2 ? "btn-danger" : "btn-warning") ">@(payment.Status == 1 ? "Success" : payment.Status == 2 ? "Error" : "Waiting")</button>
+                                        </td>
+                                    </tr>
+                                    counter++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

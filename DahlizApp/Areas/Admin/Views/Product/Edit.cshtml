@@ -1,0 +1,174 @@
+﻿@model ProductEditViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <form autocomplete="off" method="post" action="@Url.Action("edit", "product")" id="product_edit" enctype="multipart/form-data" class="form-horizontal m-t-30">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body">
+                    <h4 class="card-title">Product Info</h4>
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <input class="hidden" style="display:none;" type="text" id="productId" name="ProductId" value="@Model.Product.Id" />
+                        <select data-root="Products" name="old_photos" style="display:none;">
+                            @foreach (var photoPath in Model.Product.Photos)
+                            {
+                                <option value="@photoPath.Name">@photoPath.FileName</option>
+                            }
+                        </select>
+                        <div class="error_wrapper product_category"></div>
+                        <label>Category</label>
+                        <select data-element="true" data-error="product_category" name="CategoryId" class="form-control">
+                            <option value="0">Category</option>
+                            @foreach (var category in Model.CategoryLanguages)
+                            {
+                                if (Model.Product.Subcategory.CategoryId == category.CategoryId)
+                                {
+                                    <option selected value="@category.CategoryId">@category.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@category.CategoryId">@category.Name</option>
+
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="error_wrapper product_subcategory"></div>
+                        <label>Subcategory</label>
+                        <select data-element="true" data-error="product_subcategory" name="SubCategoryId" class="form-control">
+                            <option value="0">Subcategory</option>
+                            @foreach (var subcategory in Model.SubcategoryLanguages)
+                            {
+                                if (Model.Product.SubcategoryId == subcategory.SubcategoryId)
+                                {
+                                    <option selected value="@subcategory.SubcategoryId">@subcategory.Name</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@subcategory.SubcategoryId">@subcategory.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        @for (int i = 0; i < Model.Languages.Count; i++)
+                        {
+
+                            var error_name = "product_name" + i;
+                            <div class="error_wrapper @error_name"></div>
+                            <label>Name(@Model.Languages[i].Key)</label>
+                            <input data-element="true" data-type="text" data-error="@error_name" value="@Model.ProductLanguages[i].Name" name="Names" type="text" class="form-control">
+                        }
+                    </div>
+                    <div class="form-group">
+                        <div class="error_wrapper product_price"></div>
+                        <label>Price</label>
+                        <input data-element="true" data-type="number" data-error="product_price" value="@Model.Product.Price" name="Price" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="error_wrapper product_discount_percent"></div>
+                        <label>Discount Percent</label>
+                        <input data-element="true" data-type="number" data-error="product_discount_percent" value="@Model.Product.DiscountPercent" name="DiscountPercent" type="text" class="form-control">
+                    </div>
+                    <div class="form-group SizeCountForm">
+                        <div class="error_wrapper my-2 size_error"></div>
+                        @foreach (var item in Model.ProductSizeCounts)
+                        {
+                        <div class="ProductSizeCount">
+                            <div class="size">
+                                <label>Sizes</label>
+                                <select data-element="true" data-error="size_error" id="Sizes" name="Sizes" class="form-control">
+                                    @foreach (var size in Model.Sizes)
+                                    {
+                                        if (item.SizeId == size.Id)
+                                        {
+                                            <option selected value="@size.Id">@size.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@size.Id">@size.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="quantity">
+                                <label>Quantity</label>
+                                <input value="@item.Count" data-element="true" data-type="number" data-error="product_quantity" name="Count" type="text" class="form-control">
+                            </div>
+                            <a class="delete"><i class="fas fa-times"></i></a>
+                        </div>
+
+                        }
+
+                    </div>
+                    <a href="#" class="addSize btn btn-danger" style="width:200px;">Add Size</a>
+                    @*<div class="form-group">
+            <div class="error_wrapper product_color"></div>
+            <label>Colors</label>
+            <select data-element="true" data-error="product_color" id="Colors" name="Colors" class="form-control select2" multiple="multiple">
+                @{
+                    bool isSelectedColor = false;
+                }
+                @foreach (var color in Model.Colors)
+                {
+
+                    @foreach (var product_color in Model.ProductColors)
+                    {
+                        @if (color.ColorId == product_color.ColorId)
+                        {
+                            isSelectedColor = true;
+                            <option selected value="@color.ColorId">@color.Name</option>
+                            break;
+                        }
+                        else
+                        {
+                            isSelectedColor = false;
+                        }
+                    }
+
+                    if (!isSelectedColor)
+                    {
+                        <option value="@color.ColorId">@color.Name</option>
+                    }
+                }
+            </select>
+        </div>*@
+                    <div class="form-group">
+                        @for (int i = 0; i < Model.Languages.Count; i++)
+                        {
+                            <label>Description(@Model.Languages[i].Key)</label>
+                            <textarea required class="form-control" name="Descriptions">
+                                    @Model.ProductLanguages[i].Description
+                            </textarea>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body">
+                    @*<div class="erro_wrapper image_error"></div>*@
+                    <h4 class="card-title">Product Photos</h4>
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <span style="font-size:3em;" id="photo_info"></span>
+                    <div class="item">
+                        <input name="Photos" data-controller="Product" data-path="Products" id="Upload" type="file" multiple="multiple" />
+                    </div>
+                    <h5>Min. dimensions : 275 x 415</h5>
+                    <ul class="photos"></ul>
+                </div>
+            </div>
+        </div>
+        <select name="Photos" style="display:none;" multiple id="add_photo_names"></select>
+        <select name="DeletePhotos" style="display:none;" multiple id="delete_photos"></select>
+        <button type="submit" id="btnSubmit" data-parent="#product_edit" class="btn btn-primary">Edit</button>
+    </form>
+</div>

@@ -1,0 +1,12 @@
+﻿@model LanguageModel
+<li class="left-navigation-list mydropdown-wrapper">
+    <span>@Localizer[Model.Language.Value]</span> <i class="fas fa-sort-down down"></i>
+    <ul class="mydropdown">
+        @foreach (var language in Model.Languages)
+        {
+            <li>
+                <a href="@Url.Action("SetLanguage","Language",new { culture =  language.Key,returnUrl = Context.Request.HttpContext.Request.Path})">@Localizer[language.Value]</a>
+            </li>
+        }
+    </ul>
+</li>

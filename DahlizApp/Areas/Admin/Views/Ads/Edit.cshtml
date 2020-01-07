@@ -1,0 +1,58 @@
+﻿@model DahlizApp.Models.Ad
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Ad</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="adsEditForm" method="post" asp-controller="Ads" asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <select data-root="Ads" name="old_photos" style="display:none;">
+                <option value="@Model.PhotoPath">@Model.PhotoPath</option>
+            </select>
+            <div class="form-group">
+                <div class="error_wrapper ad_heading"></div>
+                <label asp-for="Heading" class="control-label"></label>
+                <input data-element="true" data-error="ad_heading" data-type="text" asp-for="Heading" class="form-control" />
+                <span asp-validation-for="Heading" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="error_wrapper ad_title"></div>
+                <label asp-for="Title" class="control-label"></label>
+                <input data-element="true" data-error="ad_title" data-type="text" asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="error_wrapper ad_link"></div>
+                <label asp-for="Link" class="control-label"></label>
+                <input data-element="true" data-error="ad_link" data-type="text" asp-for="Link" class="form-control" />
+                <span asp-validation-for="Link" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-body">
+                        <h4 class="card-title">Ad Photo</h4>
+                        <span style="font-size:3em;" id="photo_info"></span>
+                        <div class="item">
+                            <input data-controller="Ads" data-type="single" id="Upload" data-path="Ads" type="file" />
+                        </div>
+                        <ul class="photos"></ul>
+                    </div>
+                </div>
+            </div>
+            <select name="PhotoPath" style="display:none;" multiple id="add_photo_names"></select>
+            <select name="DeletePhotoPath" style="display:none;" multiple id="delete_photos"></select>
+            <button type="submit" id="btnSubmit" data-parent="#adsEditForm" class="btn btn-primary">Edit</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

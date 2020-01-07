@@ -1,0 +1,21 @@
+﻿@model FooterModel
+ <!-- Footer -->
+<footer>
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 mt-4 footer-top-element">
+                    <h3>@Localizer["about store"]</h3>
+                    <a href="@Url.Action("Index","About")" class="terms-and-conditions">@Localizer["About Dahliz"]</a>
+                    <a href="@Url.Action("Index","Terms")" class="terms-and-conditions">@Localizer["Terms and Conditions"]</a>
+                    @if (Model.Setting != null)
+                    {
+                        <p>@Model.Setting.Description</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+    </div>
+</footer>

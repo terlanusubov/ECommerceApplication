@@ -1,0 +1,25 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-11 mt-4 mx-auto">
+            <h1>Terms and Conditions</h1>
+            @{
+                List<Language> languages = (List<Language>)ViewBag.Languages;
+                var counter = 1;
+            }
+            @foreach (Language language in languages)
+            {
+
+                <div class="editor-wrapper my-5">
+                    <h4>Terms for @language.Value language</h4>
+                    <textarea data-editor="true" name="content" id="editor_@counter">
+                    &lt;p&gt;Here goes the initial content of the editor.&lt;/p&gt;
+                </textarea>
+                </div>
+                counter++;
+            }
+
+            <button type="button" id="terms_add" class="mt-3 btn btn-success">Add</button>
+            <p style="font-size:2em;font-weight:bold;" id="editor_info"></p>
+        </div>
+    </div>
+</div>

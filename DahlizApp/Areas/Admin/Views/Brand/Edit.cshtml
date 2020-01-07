@@ -1,0 +1,55 @@
+﻿@model BrandModel
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Brand Add</h4>
+                <form id="brand_edit" autocomplete="off" method="post" action="@Url.Action("edit", "brand")" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <input type="text" style="display:none;" name="BrandId" value="@Model.Brand.Id" />
+                    <div class="form-group">
+                        <div class="error_wrapper brand_name"></div>
+                        <label>Name</label>
+                        <input data-element="true" data-type="text" data-error="brand_name" value="@Model.Brand.Name" name="BrandName" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="error_wrapper brand_category"></div>
+                        <label>Category Names</label>
+                        <select data-element="true" data-error="brand_category" id="Categories" name="Categories" class="form-control select2" multiple="multiple">
+                            @{
+                                var isFound = false;
+                            }
+                            @foreach (var categoryLanguage in Model.CategoryLanguages)
+                            {
+                                foreach (var categoryBrand in Model.CategoryBrands)
+                                {
+                                    if (categoryLanguage.CategoryId == categoryBrand.CategoryId)
+                                    {
+                                        isFound = true;
+                                        <option selected value="@categoryLanguage.CategoryId">@categoryLanguage.Name</option>
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        isFound = false;
+                                    }
+                                }
+                                if (!isFound)
+                                {
+                                    <option value="@categoryLanguage.CategoryId">@categoryLanguage.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" id="btnSubmit" data-parent="#brand_edit" class="btn btn-primary">Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

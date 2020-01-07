@@ -1,0 +1,42 @@
+﻿@model HomeModel
+<section id="slider">
+    <div class="owl-carousel">
+        @foreach (var slide in Model.Slides)
+        {
+            <div class="slide-item" style="background-image:url('/Admin/Uploads/Sliders/@slide.PhotoPath')">
+                <h2>@slide.Title</h2>
+                <p>@slide.Text</p>
+            </div>
+        }
+    </div>
+</section>
+<!-- Advertising -->
+<section class="my-4" id="ads">
+    <div class="container">
+        <div class="row">
+            @{
+                var counter = 0;
+            }
+            @foreach (var ad in Model.Ads)
+            {
+
+                <div class="col-lg-4 my-4 ads-item">
+                    <a href="@ad.Link">
+                        <div style="background-image:url('/Admin/Uploads/Ads/@ad.PhotoPath');" class="ad-content">
+                            <div class="ad-overlay">
+                                <div class="ad-info @(counter%2==0?"large top":"small bottom")  ">
+                                    <div class="ad-info-overlay">
+                                        <h3>@ad.Title</h3>
+                                        <p>@ad.Heading</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                counter++;
+            }
+        </div>
+    </div>
+</section>
+<!-- End Advertising -->

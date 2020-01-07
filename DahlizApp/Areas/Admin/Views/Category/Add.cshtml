@@ -1,0 +1,31 @@
+﻿@model List<Language>
+@{
+    ViewData["Title"] = "Add";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Category Add</h4>
+                <form id="category_add" autocomplete="off" method="post" action="@Url.Action("add", "category")" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    @{ var counter = 1;}
+                    @foreach (var language in Model)
+                    {
+                        var error_name = "category_name" + counter;
+                        <div class="form-group">
+                            <div class="error_wrapper @error_name"></div>
+                            <label>Name (@language.Key)</label>
+                            <input data-element="true" data-type="text" data-error="@error_name" name="Names" type="text" class="form-control">
+                        </div>
+                        counter++;
+                    }
+                    <button type="submit" id="btnSubmit" data-parent="#category_add" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

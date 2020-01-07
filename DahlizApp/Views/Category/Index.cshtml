@@ -1,0 +1,54 @@
+﻿@model CategoryModel
+@{
+    ViewData["Title"] = "Index";
+    List<Card> WishlistCards = new List<Card>();
+    if (Context.Session.GetObjectFromJson<Card>("Wishlist") != null)
+    {
+        WishlistCards = Context.Session.GetObjectFromJson<Card>("Wishlist");
+    }
+}
+<!-- Start Product List -->
+<section id="product-list">
+    <div class="container-fluid">
+        <div class="row product-list-wrapper" data-subcategoryId="@(Model.SubCategoryId!=null?Model.SubCategoryId:null)" data-categoryId="@Model.CategoryId">
+            @foreach (var product in Model.ProductLanguages)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 product-item" data-id="@product.ProductId">
+                    <div class="shadow-wrapper mx-auto">
+                        <div class="product-img d-flex justify-content-center">
+                            <a href="@Url.Action("Index","Product",new {  id = product.ProductId})">
+                                <img src="~/Admin/Uploads/Products/@(product.Product.ProductPhotos!=null?product.Product.ProductPhotos.FirstOrDefault().PhotoPath:"")" alt="">
+                                @if (product.Product.DiscountPercent != 0)
+                                {
+                                    <span class="discount">@product.Product.DiscountPercent %</span>
+                                }
+                            </a>
+                            <span class="wishlist likeitem @(WishlistCards.Find(c=>c.Id==product.ProductId)!=null?"active":"")"><i class="far fa-heart"></i></span>
+                        </div>
+                        <div class="product-info my-2">
+                            <a href="@Url.Action("Index","Product",new {  id = product.ProductId})">@product.Name</a>
+                            @if (product.Product.DiscountPercent != 0)
+                            {
+                                <div class="price">
+                                    <span class="line-through">@product.Product.Price.ToString("#") &#x20bc;</span>
+                                    <span>@(Math.Ceiling(product.Product.Price - (product.Product.Price * product.Product.DiscountPercent / 100)))  &#x20bc;</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>@product.Product.Price &#x20bc;</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="load-more">
+            <div class="viewed">
+                <p>@Localizer["You've viewed"] <span>@Model.ProductLanguages.Count</span>   @Localizer["of"] @Model.Count @Localizer["products"]</p>
+            </div>
+            <button class="load-button">@Localizer["load more"]</button>
+        </div>
+    </div>
+</section>
+<!-- End product list -->

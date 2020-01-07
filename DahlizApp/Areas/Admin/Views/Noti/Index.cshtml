@@ -1,0 +1,52 @@
+﻿@model NotiLanguage
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Notification</h4>
+                    <a href="@Url.Action("add","noti")" class="float-right btn btn-primary">Add</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Text</th>
+                                <th scope="col">Link</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                               var i = 1; 
+
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@Model.Text</td>
+                                    <td>@Model.Noti.Link</td>
+                                    <td>
+                                        <a asp-controller="noti" asp-action="edit" asp-route-id="@Model.Noti.Id"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="noti" asp-action="delete" asp-route-id="@Model.Noti.Id"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

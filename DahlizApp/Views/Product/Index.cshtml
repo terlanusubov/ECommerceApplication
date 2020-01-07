@@ -1,0 +1,78 @@
+﻿@model SingleProductModel
+@{
+    ViewData["Title"] = "Index";
+    List<Card> WishlistCards = new List<Card>();
+    if (Context.Session.GetObjectFromJson<Card>("Wishlist") != null)
+    {
+        WishlistCards = Context.Session.GetObjectFromJson<Card>("Wishlist");
+    }
+}
+<section id="product-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-5 col-10  product-img">
+                <div class="owl-carousel">
+                    @foreach (var productImg in Model.ProductPhotos)
+                    {
+                        <img src="~/Admin/Uploads/Products/@productImg.PhotoPath" alt="">
+                    }
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-7 product">
+                <div class="product_info">
+                    <input hidden type="text" name="productId" value="@Context.Session.GetString("product_id")" />
+                    <h3>@Model.ProductLanguage.Name @*<span>(@Model.ProductReviews.Count reviews)</span>*@</h3>
+                    <div class="rating">
+                        <div class="rating">
+                            @*@for (int i = 0; i < Model.Product.Rate; i++)
+            {
+                <span class="rate"></span>
+            }*@
+                        </div>
+                        @if (Model.Product.DiscountPercent != 0)
+                        {
+                            <div class="price">
+                                <span class="line-through">@Model.Product.Price.ToString("#") &#x20bc;</span>
+                                <span>@(Math.Ceiling(Model.Product.Price - (Model.Product.Price * Model.Product.DiscountPercent / 100)))  &#x20bc;</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="single-price">@Model.Product.Price &#x20bc;</p>
+                        }
+                        <p>
+                            @Model.ProductLanguage.Description
+                        </p>
+                    </div>
+                    <div class="product_options">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="sizing col-7">
+                                    <p>@Localizer["Size"]</p>
+                                    <select name="size" id="size">
+                                        <option selected>@Localizer["Choose Size"]</option>
+                                        @foreach (var size in Model.ProductSizeCount)
+                                        {
+                                            <option value="@size.SizeId">@size.Size.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="quantity col-5">
+                                    <p>@Localizer["Quantity"]</p>
+                                    <select name="quantity" id="quantity"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wishlist-wrapper single-product-item" data-id="@Model.Product.Id">
+                            <span class="wishlist likeitem @(WishlistCards.Find(c=>c.Id==Model.Product.Id)!=null?"active":"")">
+                                <i class="far fa-heart"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="product-buying">
+                        <button class="add-to-bag">@Localizer["add to bag"]</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

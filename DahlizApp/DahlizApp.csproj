@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>3042f243-c3e7-4c27-930e-e39752ce3e65</UserSecretsId>
+    <SignAssembly>false</SignAssembly>
+    <LangVersion>7.1</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\Admin\Thumbnails\**" />
+    <Compile Remove="wwwroot\Admin\Uploads\Products\Thumbnails\**" />
+    <Content Remove="wwwroot\Admin\Thumbnails\**" />
+    <Content Remove="wwwroot\Admin\Uploads\Products\Thumbnails\**" />
+    <EmbeddedResource Remove="wwwroot\Admin\Thumbnails\**" />
+    <EmbeddedResource Remove="wwwroot\Admin\Uploads\Products\Thumbnails\**" />
+    <None Remove="wwwroot\Admin\Thumbnails\**" />
+    <None Remove="wwwroot\Admin\Uploads\Products\Thumbnails\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Resources\Views\Category.Index.az.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LazZiya.ImageResize" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0006" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Resources\Models\ViewModels\" />
+    <Folder Include="wwwroot\Admin\login\" />
+    <Folder Include="wwwroot\Admin\Uploads\Ads\" />
+    <Folder Include="wwwroot\Admin\Uploads\Sliders\" />
+    <Folder Include="wwwroot\Admin\Uploads\Products\Thumbnails\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Resources\Views\Category.Index.az.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </None>
+    <None Include="wwwroot\Template\front\js\owl.carousel.js" />
+    <None Include="wwwroot\Template\front\js\script.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Areas\Admin\Views\_ViewImports.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\_ViewStart.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+</Project>

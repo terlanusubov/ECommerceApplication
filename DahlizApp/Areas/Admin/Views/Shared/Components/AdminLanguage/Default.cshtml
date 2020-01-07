@@ -1,0 +1,25 @@
+﻿@model List<Language>
+@{
+    var langId = Convert.ToInt32(Context.Session.GetString("adminLangId"));
+}
+    <div class="signout">
+        <a class="btn btn-primary mx-4 my-2" href="@Url.Action("Signout","Account")">Sign out</a>
+    </div>
+<div class="form-group">
+    <form action="@Url.Action("setlanguage","home")">
+        <select onchange="this.form.submit();" name="culture" class="form-control" id="admin_language">
+            @foreach (var item in Model)
+            {
+                if (item.Id == langId)
+                {
+                    <option selected data-id="@item.Key" value="@item.Id">@item.Value</option>
+                }
+                else
+                {
+                    <option data-id="@item.Key" value="@item.Id">@item.Value</option>
+                }
+            }
+        </select>
+    </form>
+</div>
+

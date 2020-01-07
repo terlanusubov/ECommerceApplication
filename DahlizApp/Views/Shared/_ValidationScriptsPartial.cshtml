@@ -1,0 +1,14 @@
+﻿<environment names="Development">
+    <script src="~/Template/front/lib/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Template/front/lib/jquery.validate.min.js"></script>
+</environment>
+<environment names="Staging,Production">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"
+            asp-fallback-src="~/Template/front/lib/jquery.validate.min.js"
+            asp-fallback-test="window.jquery && window.jquery.validator">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"
+            asp-fallback-src="~/Template/front/lib/jquery.validate.unobtrusive.min.js"
+            asp-fallback-test="window.jquery && window.jquery.validator && window.jquery.validator.unobtrusive">
+    </script>
+</environment>

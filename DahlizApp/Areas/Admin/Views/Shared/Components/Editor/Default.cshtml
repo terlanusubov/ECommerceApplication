@@ -1,0 +1,26 @@
+﻿@model List<Language>
+<script>
+
+
+       var langCount = @Model.Count;
+       var editor_variables = [];
+       var counter = 1;
+       for (var i = 0; i < langCount; i++) {
+           var myEditor;
+           CreateEditor(counter, myEditor);
+           counter++;
+    }
+
+
+    async function CreateEditor(counter, myEditor) {
+      await  ClassicEditor
+               .create(document.querySelector(`#editor_${counter}`))
+                .then(editor => {
+                   myEditor = editor;
+               })
+               .catch(error => {
+                   console.error(error);
+               });
+           editor_variables.push(myEditor);
+    }
+</script>

@@ -1,0 +1,52 @@
+﻿@model SubcategoryViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Subcategory</h4>
+                    <a href="@Url.Action("add","subcategory")" class="float-right btn btn-primary">Add</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var i = 1;
+                            }
+                            @foreach (var subcategory in Model.subcategoryLanguages)
+                            {
+                                var category_name = Model.categoryLanguages.Where(cl => cl.CategoryId == subcategory.Subcategory.CategoryId).Select(cl => cl.Name).FirstOrDefault();
+
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@subcategory.Name</td>
+                                    <td>@category_name</td>
+                                    <td>
+                                        <a asp-controller="subcategory" asp-action="edit" asp-route-id="@subcategory.SubcategoryId"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" asp-route-subcategoryId="@subcategory.SubcategoryId"  asp-controller="subcategory" asp-action="delete"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

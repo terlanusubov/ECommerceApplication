@@ -1,0 +1,29 @@
+﻿@model IEnumerable<DahlizApp.Models.User>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Email
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+               <td>
+                   @item.Name
+               </td>
+                <td>@item.Surname</td>
+                <td>@item.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>

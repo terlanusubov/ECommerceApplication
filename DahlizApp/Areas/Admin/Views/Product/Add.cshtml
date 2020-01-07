@@ -1,0 +1,138 @@
+﻿@model ProductAddViewModel
+@{
+    ViewData["Title"] = "Add";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <form onsubmit="Validator(e,'productAddForm')" autocomplete="off" method="post" action="@Url.Action("add", "product")" id="productAddForm" enctype="multipart/form-data" class="form-horizontal m-t-30">
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body">
+                    <h4 class="card-title">Product Info</h4>
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <!--Categories  -->
+                    <div class="form-group">
+                        <div class="error_wrapper product_category"></div>
+                        <label>Category</label>
+                        <select data-element="true" data-error="product_category" name="CategoryId" class="form-control">
+                            <option value="0">Category</option>
+                            @foreach (var item in Model.categoryLanguages)
+                            {
+                                <option value="@item.Category.Id">@item.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <!--End Categories  -->
+                    <!--Subcategories  -->
+                    <div class="form-group">
+                        <div class="error_wrapper product_subcategory"></div>
+                        <label>Subcategory</label>
+                        <select data-element="true" data-error="product_subcategory" name="SubCategoryId" disabled class="form-control"></select>
+                    </div>
+                    <!--End Subcategories  -->
+                    <!--Product Multilanguage Names  -->
+                    <div class="form-group">
+                        @{
+                            var counter = 1;
+                        }
+                        @foreach (var language in Model.languages)
+                        {
+                            var error_name = "product_name" + counter;
+                            <div class="error_wrapper my-2 @error_name"></div>
+                            <label>Name (@language.Key)</label>
+                            <input data-element="true" data-type="text" data-error="@error_name" name="Names" type="text" class="form-control">
+                            counter++;
+                        }
+                    </div>
+                    <!-- End Product Multilanguage Names  -->
+                    <!-- Price-->
+                    <div class="form-group">
+                        <div class="error_wrapper my-2 product_price"></div>
+                        <label>Price</label>
+                        <input data-element="true" data-error="product_price" data-type="number" name="Price" type="text" class="form-control">
+                    </div>
+                    <!-- End Price-->
+                    <!-- Discount Percent-->
+                    <div class="form-group">
+                        <div class="error_wrapper my-2 product_discount_percent"></div>
+                        <label>Discount Percent</label>
+                        <input data-element="true" data-type="number" data-nullable="true" data-error="product_discount_percent" name="DiscountPercent" type="text" class="form-control">
+                    </div>
+                    <!-- End Discount Percent-->
+                    <!-- Sizes -->
+                    <div class="form-group SizeCountForm">
+                        <div class="error_wrapper my-2 size_error"></div>
+                        <div class="ProductSizeCount">
+                            <div class="size">
+                                <label>Sizes</label>
+                                <select data-element="true" data-error="size_error" id="Sizes" name="Sizes" class="form-control">
+                                    @foreach (var item in Model.sizes)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="quantity">
+                                <div class="row">
+                                    <div class="input col-4">
+                                        <label>Quantity</label>
+                                        <input data-element="true" data-type="number" data-error="product_quantity" name="Count" type="text" class="form-control">
+                                    </div>
+                                    <div class="col-8 errors"> <div class="error_wrapper product_quantity"></div></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <a href="#" class="addSize">Add Size</a>
+                    <!--End Sizes-->
+                    <!-- Colors -->
+                    @*<div class="form-group">
+                            <div class="error_wrapper color_error"></div>
+                            <label>Colors</label>
+                            <select id="Colors" name="Colors" class="form-control select2" data-element="true" data-error="color_error" multiple="multiple">
+                                @foreach (var item in Model.colors)
+                                {
+                                    <option value="@item.Color.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>*@
+                    <!--End Colors-->
+                    <!-- Descriptions -->
+                    <div class="form-group">
+                        @foreach (var item in Model.languages)
+                        {
+                            <label>Description(@item.Key)</label>
+                            <textarea required class="form-control" name="Descriptions">
+                            </textarea>
+                        }
+                    </div>
+                    <!-- End Descriptions -->
+                </div>
+            </div>
+        </div>
+        <!-- Photo Upload -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-body">
+                    <h4 class="card-title">Product Photos</h4>
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="error_wrapper image_error"></div>
+                    <span style="font-size:3em;"  id="photo_info"></span>
+                    <div class="item">
+                        <input data-controller="Product" data-error="image_error" data-element="true" data-type="multiple" id="Upload" data-path="Products" type="file" multiple="multiple" />
+                    </div>
+                    <h5>Min. dimensions : 275 x 415</h5>
+                    <ul class="photos"></ul>
+                </div>
+            </div>
+        </div>
+        <select name="Photos" style="display:none;" multiple id="add_photo_names"></select>
+        <select name="DeletePhotos" style="display:none;" multiple id="delete_photos"></select>
+        <button type="submit" id="btnSubmit" data-parent="#productAddForm" class="btn btn-primary">Add</button>
+    </form>
+</div>
+

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Add";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Slide Add</h4>
+                <form id="slide_add" autocomplete="off" method="post" enctype="multipart/form-data" action="@Url.Action("add", "slider")" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <div class="error_wrapper slide_heading"></div>
+                        <label>Text</label>
+                        <input data-element="false" data-type="text" data-error="slide_heading" name="Text" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="error_wrapper slide_title"></div>
+                        <label>Title</label>
+                        <input data-element="false" data-type="text" data-error="slide_title" name="Title" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="error_wrapper slider_photo"></div>
+                        <span style="font-size:3em;" id="photo_info"></span>
+                        <label for="Upload">Photo</label>
+                        <input data-element="true" data-type="single" data-controller="Slider" data-error="slider_photo" type="file" id="Upload" data-path="Sliders" />
+                    </div>
+                    <ul class="photos"></ul>
+
+                    <select name="PhotoPath" style="display:none;" multiple id="add_photo_names"></select>
+                    <select name="DeletePhotoPath" style="display:none;" multiple id="delete_photos"></select>
+                    <button type="submit" id="btnSubmit" data-parent="#slide_add" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

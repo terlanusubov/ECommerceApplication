@@ -1,0 +1,48 @@
+﻿@model List<ColorLanguage>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Color</h4>
+                    <a href="@Url.Action("add","color")" class="float-right btn btn-primary">Add</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{var i = 1; }
+                            @foreach (var color in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@color.Name</td>
+                                    <td>
+                                        <a asp-controller="color" asp-action="edit" asp-route-id="@color.Color.Id"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="color" asp-action="delete" asp-route-id="@color.Color.Id"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

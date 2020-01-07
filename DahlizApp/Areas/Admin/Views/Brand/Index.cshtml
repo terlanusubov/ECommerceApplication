@@ -1,0 +1,58 @@
+﻿@model BrandIndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Category</h4>
+                    <a href="@Url.Action("add","brand")" class="float-right btn btn-primary">Add</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Categories</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{var i = 1; }
+                            @foreach (var brand in Model.Brands)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@brand.Name</td>
+                                    <td>
+                                        @foreach (var item in Model.CategoryBrands)
+                                        {
+                                            if(brand.Id == item.BrandId)
+                                            {
+                                                <p class="m-0">
+                                                    @Model.CategoryLanguages.Where(cl => cl.CategoryId == item.CategoryId).FirstOrDefault().Name
+                                                </p>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-controller="brand" asp-action="edit" asp-route-id="@brand.Id"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" asp-controller="brand" asp-action="delete" asp-route-brandId="@brand.Id"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

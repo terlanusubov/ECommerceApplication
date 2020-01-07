@@ -1,0 +1,52 @@
+﻿@model List<Slide>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Slide</h4>
+                    <a href="@Url.Action("add","slider")" class="float-right btn btn-primary">Add</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table slider-table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Heading</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Photo</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var i = 1;
+                            }
+                            @foreach (var slide in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@i</th>
+                                    <td>@slide.Text</td>
+                                    <td>@slide.Title</td>
+                                    <td><img src="~/Admin/Uploads/Sliders/@slide.PhotoPath" alt="Slider" /></td>
+                                    <td>
+                                        <a asp-controller="slider" asp-action="edit" asp-route-id="@slide.Id"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td>
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" asp-route-slideId="@slide.Id" asp-controller="slider" asp-action="delete"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

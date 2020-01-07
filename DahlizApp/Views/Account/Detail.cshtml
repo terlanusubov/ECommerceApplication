@@ -1,0 +1,58 @@
+﻿@model User
+<!-- MY ACCOUNT -->
+<div class="account-wrap my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-4 checkout-steps">
+                <h6>Account</h6>
+                <div>
+                    <ul class="account-list">
+                        <li class="active"><a asp-action="Detail" asp-controller="Account"><i class="fa fa-edit"></i> My Details</a></li>
+                        <li><a asp-action="Signout" asp-controller="Account"> <i class="fa fa-edit"></i> Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9 col-sm-8 details">
+                <!-- HTML -->
+                <form method="post" asp-action="UpdateDetail" asp-controller="Account">
+                    <ul class="form-list row">
+                        <li class="col-md-12 col-sm-12">
+                            <label>First Name</label>
+                            <input value="@Model.Name" type="text" name="Name" class="input-text">
+                        </li>
+                        <li class="col-md-12 col-sm-12">
+                            <label>Second Name</label>
+                            <input value="@Model.Surname" type="text" name="Surname" class="input-text">
+                        </li>
+                        <li class="col-md-12 col-sm-12">
+                            <label>Username</label>
+                            <input value="@Model.UserName" type="text" name="Username" class="input-text">
+                        </li>
+                        <li class="col-md-12 col-sm-12">
+                            <label>Email</label>
+                            <input value="@Model.Email" type="text" name="Email" class="input-text">
+                        </li>
+                        <li class="col-md-12 col-sm-12">
+                            <label>Phone</label>
+                            <input value="@Model.PhoneNumber" type="text" name="Phone" class="input-text">
+                        </li>
+                    </ul>
+                    <div class="buttons-set">
+                        <button class="btn-black" type="submit"><span>Update</span></button>
+                    </div>
+                </form>
+                @if (!Model.EmailConfirmed)
+                {
+                    <form id="confirmation" asp-action="Confirmation" asp-controller="Account" method="post">
+                        <ul style="margin:20px 0px;">
+                            <li style="padding:0;" class="col-md-12 p-0 col-sm-12">
+                                <p>Your account is not confirmed.Please check your email address!</p>
+                            </li>
+                        </ul>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix space20"></div>

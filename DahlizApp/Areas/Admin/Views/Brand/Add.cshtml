@@ -1,0 +1,35 @@
+﻿@model List<CategoryLanguage>
+@{
+    ViewData["Title"] = "Add";
+}
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-body">
+                <h4 class="card-title">Brand Add</h4>
+                <form autocomplete="off" method="post" id="brand_add" action="@Url.Action("add", "brand")" class="form-horizontal m-t-30">
+                    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <div class="error_wrapper brand_name"></div>
+                        <label>Name</label>
+                        <input data-element="true" data-type="text" data-error="brand_name" name="BrandName" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="error_wrapper brand_category"></div>
+                        <label>Category Names</label>
+                        <select data-element="true" data-error="brand_category" id="Categories" name="Categories" class="form-control select2" multiple="multiple">
+                            @foreach (var category in Model)
+                            {
+                                <option value="@category.CategoryId">@category.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" id="btnSubmit" data-parent="#brand_add" class="btn btn-primary">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

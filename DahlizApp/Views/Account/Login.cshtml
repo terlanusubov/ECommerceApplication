@@ -1,0 +1,71 @@
+﻿<section id="login">
+    <div class="col-lg-6 col-md-8 col-sm-10  mx-auto">
+        <div class="title">
+            <span><i class="fas fa-chevron-right"></i></span>
+            <h4>@Localizer["Login"]</h4>
+        </div>
+        <div class="login-form">
+            <div class="social d-flex justify-content-center">
+                <a id="facebook" asp-action="ExternalLogin" asp-controller="Account" asp-route-provider="Facebook" class="facebook"><i class="fab fa-facebook-f"></i>Facebook</a>
+                <a asp-action="ExternalLogin" asp-controller="Account" asp-route-provider="Google" class="google"><i class="fab fa-google"></i>Google</a>
+            </div>
+            <form autocomplete="off" method="post" asp-action="Login" asp-controller="Account">
+                <div class="alert alert-danger" style="padding:0px;border:0px;">
+                  @Html.ValidationSummary()
+                </div>
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input name="Email" id="Email" class="form-control" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="Password">@Localizer["Password"]</label>
+                    <input name="Password" id="Password" class="form-control" type="password">
+                </div>
+                <div class="row">
+                    <div class="col-6 remember-me d-flex align-items-center">
+                        <input class="form-control" type="checkbox" name="Remember" id="Remember">
+                        <label for="Remember">@Localizer["Remember me"]</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="login-button">@Localizer["Login"]</button>
+                    <a class="login-button float-right" href="@Url.Action("register","account")">@Localizer["register"]</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@if (TempData["IsSend"]?.ToString() == "true")
+{
+
+    <div class="modal" tabindex="-1" id="myModal" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@Localizer["Attention"]</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@Localizer["Please check your email address."]</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["Close"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Modal{
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        $('#myModal').modal("show");
+    </script>
+}
